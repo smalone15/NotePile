@@ -11,4 +11,12 @@ namespace NotePile {
             wxTextCtrl txt;
             wxListBox list;
     };
+    class SecondaryWidgets
+    {
+        public:
+            SecondaryWidgets(void);
+            SecondaryWidgets(wxFrame *target);
+            void OnInit(wxFrame *target);
+            wxPanel childPanel;
+    };
 }

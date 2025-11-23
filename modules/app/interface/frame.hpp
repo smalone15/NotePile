@@ -15,6 +15,7 @@ namespace NotePile {
             void killButton_clicked(wxCommandEvent &evt);
         private:
             MainWidgets components;
+            SecondaryWidgets secondaryComponets;
     };
 }
 

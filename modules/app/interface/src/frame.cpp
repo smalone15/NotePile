@@ -1,5 +1,6 @@
 #include <wx/wx.h>
 #include <wx/display.h>
+#include <wx/msw/window.h>
 #include <iostream>
 #include <app/interface/frame.hpp>
 
@@ -35,7 +36,7 @@ MasterFrame :: MasterFrame(const wxString &title)
     // MakeWindowClickThrough(this); //Make window clickthrough-able, problem is, no components within the frame are clickable either...
     components.Init(this);
 
-    // Set Parent Window Size - stuck at a small size though...
+    // Set Parent Window Size
     wxDisplay display(wxDisplay::GetFromWindow(this));
     wxRect screenRect = display.GetClientArea();
 
@@ -54,6 +55,18 @@ MasterFrame :: MasterFrame(const wxString &title)
         &MasterFrame::killButton_clicked,
         this
     );
+
+    //childPanel, can't get it to work as a component, get help with that
+    wxPanel* myPanel = new wxPanel(this, wxID_ANY, wxPoint(400, 100), wxSize(300, 400));
+    myPanel->SetBackgroundColour(*wxYELLOW);
+
+    //to add component to panel, add sizer and add the component to that.
+    wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
+    //Make textctrl to add to sizer
+    wxTextCtrl* textArea = new wxTextCtrl(myPanel, wxID_ANY, "", wxPoint(100, 300), wxSize(200, 100));
+    sizer->Add(textArea, 0, wxEXPAND | wxALL, 10);
+    myPanel->SetSizer(sizer);
+    // myPanel->AddChild(components.killButton); //add kill button to panel below
 }
 
 MasterFrame :: ~MasterFrame(void) {

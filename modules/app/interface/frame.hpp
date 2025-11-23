@@ -12,6 +12,7 @@ namespace NotePile {
         public:
             wxDECLARE_EVENT_TABLE();
             void button_clicked(wxCommandEvent &evt);
+            void killButton_clicked(wxCommandEvent &evt);
         private:
             MainWidgets components;
     };

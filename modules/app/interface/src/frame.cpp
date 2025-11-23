@@ -1,4 +1,5 @@
 #include <wx/wx.h>
+#include <wx/display.h>
 #include <iostream>
 #include <app/interface/frame.hpp>
 
@@ -17,13 +18,13 @@ MasterFrame :: MasterFrame(const wxString &title)
     Create(nullptr, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxFRAME_SHAPED | wxBORDER_NONE | wxTRANSPARENT_WINDOW);
     components.Init(this);
 
-    int width, height;
-    wxDisplaySize(&width, &height);
-    width *= 0.5;
-    double aspect = 16.0 / 9.0;
+    // Set Parent Window Size - stuck at a small size though...
+    wxDisplay display(wxDisplay::GetFromWindow(this));
+    wxRect screenRect = display.GetClientArea();
 
-    SetSize(width, (int)(width / aspect));
-    Center();
+    //Resize full frame to ful screen (But still windowed, not true fullscreen)
+    SetSize(screenRect.GetWidth(), screenRect.GetHeight());
+    SetPosition(screenRect.GetPosition());
 
     // button commands
     components.button.Bind(

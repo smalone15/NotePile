@@ -1,0 +1,18 @@
+set(wxBUILD_SHARED OFF CACHE BOOL "Build static library")
+set(wxBUILD_MONOLITHIC ON CACHE BOOL "Build mono library.")
+
+set(CMAKE_PREFIX_PATH "C:\\Program Files\\wxWidgets\\lib\\cmake\\wxWidgets")
+find_package(wxWidgets 3.2.8 REQUIRED COMPONENTS mono)
+if(wxWidgets_USE_FILE)
+    include(${wxWidgets_USE_FILE})
+endif()
+
+set(SRCS main.cpp frame.cpp launcher.cpp widgets.cpp)
+list(TRANSFORM SRCS PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/interface/src/)
+if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_executable(${PROJECT_NAME} WIN32 ${SRCS})
+else()
+    add_executable(${PROJECT_NAME} ${SRCS})
+endif()
+target_link_libraries(${PROJECT_NAME} PRIVATE wxWidgets::wxWidgets)
+target_include_directories(${PROJECT_NAME} PRIVATE ${wxWidgets_INCLUDE_DIRS})   
